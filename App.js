@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SketchPicker } from 'react-color';
 import logo from './logo.svg';
 import './App.css';
 
@@ -6,11 +7,12 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      value:'',
-      backgroundcolor:'',
+      value:'red',
+      backcolor:'',
     }
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
+    this.handleChangeComplete=this.handleChangeComplete.bind(this);
   }
 
   handleChange(event){
@@ -18,12 +20,16 @@ class App extends Component {
   }
 
   handleSubmit(event){
-    this.setState({backgroundcolor:this.state.value});
+    this.setState({backcolor:this.state.value,});
     event.preventDefault();
   }
 
+  handleChangeComplete(event){
+    this.setState({backcolor:event.hex});
+  }
+
   render() {
-    const {backgroundcolor}=this.state;
+    const {backcolor}=this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -36,8 +42,13 @@ class App extends Component {
         onChange={this.handleChange}/>
         <input type="submit" value="Submit"/>
         </form>
-        <div style={{backgroundColor:backgroundcolor}} className="backcolor">
+        <div style={{backgroundColor:backcolor}} className="backcolor">
         </div>
+        
+      <SketchPicker 
+        color={this.state.backcolor}
+        onChangeComplete={this.handleChangeComplete}
+      />
       </div>
     );
   }
